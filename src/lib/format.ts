@@ -71,3 +71,17 @@ export function metricStatusHeading(status: MetricStatus): string | null {
       return "Not collected this round";
   }
 }
+
+// ─── Data snapshot ─────────────────────────────────────────────────────────
+
+// The site presents a fixed snapshot, not live market data. The date comes from
+// the workbook's own cutoff (METHODOLOGY.dataCutoff), formatted for reading —
+// it is never written out separately, so there is one source of truth.
+export function formatSnapshotDate(iso: string): string {
+  const [year, month, day] = iso.split("-").map(Number);
+  const monthName = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December",
+  ][month - 1];
+  return `${day} ${monthName} ${year}`;
+}

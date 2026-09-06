@@ -10,6 +10,11 @@ import {
   metricStatusLabel,
 } from "@/lib/format";
 import MetricConceptDialog from "./MetricConceptDialog";
+import TermTooltip, {
+  BasisWithTerms,
+  FormulaWithTerms,
+} from "@/components/shared/TermTooltip";
+import { METRIC_NAME_TERMS } from "@/data/terminology";
 
 interface Props {
   metric: Metric;
@@ -35,7 +40,15 @@ export default function MetricCard({ metric, companyName }: Props) {
       className="flex scroll-mt-24 flex-col rounded-lg border border-gray-200 bg-white p-5"
     >
       <div className="mb-3 flex items-start justify-between gap-4">
-        <h4 className="font-semibold text-gray-900">{metric.name}</h4>
+        <h4 className="font-semibold text-gray-900">
+          {METRIC_NAME_TERMS[metric.id] ? (
+            <TermTooltip termKey={METRIC_NAME_TERMS[metric.id]}>
+              {metric.name}
+            </TermTooltip>
+          ) : (
+            metric.name
+          )}
+        </h4>
         <div className="shrink-0 text-right">
           {displayValue !== null ? (
             <>
@@ -44,7 +57,7 @@ export default function MetricCard({ metric, companyName }: Props) {
               </span>
               {metric.basis && (
                 <span className="block text-xs text-gray-400">
-                  {metric.basis}
+                  <BasisWithTerms basis={metric.basis} />
                 </span>
               )}
             </>
@@ -61,7 +74,7 @@ export default function MetricCard({ metric, companyName }: Props) {
 
       {metric.formula && (
         <div className="mb-3 rounded border border-gray-100 bg-gray-50 px-3 py-2 font-mono text-xs text-gray-600">
-          {metric.formula}
+          <FormulaWithTerms formula={metric.formula} />
         </div>
       )}
 

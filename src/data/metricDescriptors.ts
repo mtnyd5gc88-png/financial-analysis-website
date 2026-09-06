@@ -71,7 +71,12 @@ export const METRIC_PLACEMENTS: MetricPlacement[] = [
     tier: null,
     explanation: "Total income generated from sales of products and services.",
     limitation: null,
-    placementNote: null,
+    // The workbook records the RATIO built from this line (Gross Margin) but
+    // not the absolute figure itself, for any company. Saying so keeps the
+    // Revenue -> Gross Profit -> Gross Margin chain legible rather than looking
+    // like a gap, without putting a number here that the source does not hold.
+    placementNote:
+      "The source workbook records margins and ratios rather than absolute income-statement lines, so no dollar figure is available for any company. Gross Margin below is the recorded figure built from this line.",
   }),
   placement("profitability", "gross-profit", {
     availability: "not-collected",
@@ -82,7 +87,8 @@ export const METRIC_PLACEMENTS: MetricPlacement[] = [
     explanation:
       "Revenue remaining after deducting the direct cost of goods sold.",
     limitation: null,
-    placementNote: null,
+    placementNote:
+      "Not recorded as a dollar figure for any company. What the workbook does record is Gross Profit as a share of Revenue — the Gross Margin below — so the ratio is known even though the two absolute amounts behind it are not.",
   }),
   placement("profitability", "gross-margin", {
     availability: "collected",

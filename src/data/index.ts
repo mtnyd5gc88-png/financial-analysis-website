@@ -33,19 +33,36 @@ export function getAllCompanies(): Company[] {
   return Object.values(COMPANIES);
 }
 
+// The six category groups of a company, in display order. Single accessor so
+// nothing re-lists them — Compare, the concept pages and the audits all use it.
+export function metricGroups(company: Company): MetricGroup[] {
+  return [
+    company.profitability,
+    company.valuation,
+    company.returnsOnCapital,
+    company.financialHealth,
+    company.cashGeneration,
+    company.marketReactionAndRisk,
+  ];
+}
+
+// One metric by id. Debt-to-Equity has two placements built from a single
+// value, so the first match is the same data either way.
+export function getCompanyMetric(
+  company: Company,
+  metricId: string
+): Metric | undefined {
+  return metricGroups(company)
+    .flatMap((g) => g.metrics)
+    .find((m) => m.id === metricId);
+}
+
 // Where a concept shows up as a real company metric — powers the
 // concept → application ("see it on NVIDIA") return path.
 export function companiesWithConcept(
   conceptId: string
 ): { company: Company; metric: Metric }[] {
-  const groups = (c: Company): MetricGroup[] => [
-    c.profitability,
-    c.valuation,
-    c.returnsOnCapital,
-    c.financialHealth,
-    c.cashGeneration,
-    c.marketReactionAndRisk,
-  ];
+  const groups = metricGroups;
 
   return getAllCompanies().flatMap((company) => {
     const metric = groups(company)

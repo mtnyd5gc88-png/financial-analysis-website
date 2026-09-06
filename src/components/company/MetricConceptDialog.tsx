@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { Concept, Metric } from "@/data/types";
 import { conceptHref } from "@/data/concepts";
 import ConceptRelationships from "@/components/learn/ConceptRelationships";
+import { FormulaWithTerms } from "@/components/shared/TermTooltip";
 
 interface Props {
   concept: Concept;
@@ -102,7 +103,7 @@ export default function MetricConceptDialog({
           {concept.formula && (
             <Section title="Formula">
               <div className="rounded-md border border-gray-200 bg-gray-50 px-4 py-3 font-mono text-sm text-gray-800">
-                {concept.formula}
+                <FormulaWithTerms formula={concept.formula} />
               </div>
             </Section>
           )}

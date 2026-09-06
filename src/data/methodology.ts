@@ -1,4 +1,5 @@
 import type { Methodology } from "@/data/types";
+import { formatSnapshotDate } from "@/lib/format";
 
 // Transcribed from the "Sources & Method" and "Audit & Flags" sheets of
 // "finance record.xlsx", which is the source of truth for how the company
@@ -74,3 +75,9 @@ export const EXCLUDED_METRIC_REASON =
 // income-statement and cash-flow lines, so these inputs have no value to show.
 export const NOT_COLLECTED_REASON =
   "Not recorded in the source workbook, which collects ratios and margins rather than absolute income-statement or cash-flow figures.";
+
+// "23 August 2026" — derived from the workbook cutoff above, never retyped.
+export const DATA_AS_OF = formatSnapshotDate(METHODOLOGY.dataCutoff);
+
+// One sentence, used wherever the site needs to say what the data is.
+export const SNAPSHOT_STATEMENT = `Data as of ${DATA_AS_OF}. This site presents a fixed financial-analysis snapshot from the source workbook — it is not live market data.`;

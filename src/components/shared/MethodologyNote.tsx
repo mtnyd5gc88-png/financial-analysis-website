@@ -1,4 +1,4 @@
-import { METHODOLOGY } from "@/data/methodology";
+import { DATA_AS_OF, METHODOLOGY } from "@/data/methodology";
 
 // The source workbook's "Sources & Method" sheet, shown alongside the figures
 // so the caveats travel with the numbers rather than being lost.
@@ -8,8 +8,11 @@ export default function MethodologyNote() {
       <h2 className="text-sm font-semibold uppercase tracking-widest text-gray-400 mb-1">
         Sources &amp; method
       </h2>
-      <p className="text-sm text-gray-500 mb-5">
-        {METHODOLOGY.datasetTitle} · data cutoff {METHODOLOGY.dataCutoff}
+      <p className="text-sm text-gray-500 mb-2">
+        {METHODOLOGY.datasetTitle}
+      </p>
+      <p className="mb-5 text-sm font-medium text-gray-700">
+        Data as of {DATA_AS_OF} — a fixed snapshot, not live market data.
       </p>
 
       <dl className="space-y-3">

@@ -1,38 +1,26 @@
-import { getAllCompanies } from "@/data";
+import CompareTool from "@/components/compare/CompareTool";
+import MethodologyNote from "@/components/shared/MethodologyNote";
 
-// Compare page — structural placeholder.
-// The full comparison UI will be built once more companies are added.
-// The data architecture (COMPANIES map in data/index.ts) already supports
-// multiple companies, so this page can be filled in without architectural changes.
+// Compare reads the same COMPANIES registry as every other page — there is no
+// second source of financial data here, and nothing is recalculated: each cell
+// is a value the company record already holds.
 
 export default function ComparePage() {
-  const companies = getAllCompanies();
-
   return (
     <div className="space-y-8">
       <header>
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Compare</h1>
-        <p className="text-gray-500 max-w-2xl">
-          Compare financial metrics across companies side by side. Select two or
-          more companies to begin.
+        <h1 className="mb-2 text-3xl font-bold text-gray-900">Compare</h1>
+        <p className="max-w-3xl text-gray-500">
+          Compare selected financial indicators across companies. Differences do
+          not automatically mean one company is better — a figure only makes
+          sense alongside the business behind it, and some are not comparable at
+          all. There is no score and no ranking here; the reading is yours.
         </p>
       </header>
 
-      {companies.length < 2 ? (
-        <div className="rounded-lg border border-dashed border-gray-300 bg-white p-12 text-center">
-          <p className="text-gray-400 text-sm">
-            At least two companies are required to use the comparison tool.
-          </p>
-          <p className="text-gray-300 text-xs mt-1">
-            More companies will be added in a future update.
-          </p>
-        </div>
-      ) : (
-        // Full comparison UI — to be built when multiple companies are available
-        <div className="rounded-lg border border-gray-200 bg-white p-8 text-center">
-          <p className="text-gray-400 text-sm">Comparison UI coming soon.</p>
-        </div>
-      )}
+      <CompareTool />
+
+      <MethodologyNote />
     </div>
   );
 }
