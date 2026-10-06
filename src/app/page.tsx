@@ -36,7 +36,7 @@ export default function Home() {
         <h2 className="text-sm font-semibold uppercase tracking-widest text-gray-400 mb-6 text-center">
           How it works
         </h2>
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid gap-6 sm:grid-cols-3">
           {[
             {
               step: "1. Learn",

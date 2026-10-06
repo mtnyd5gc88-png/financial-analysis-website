@@ -2,54 +2,53 @@ import type { Methodology } from "@/data/types";
 import { formatSnapshotDate } from "@/lib/format";
 
 // Transcribed from the "Sources & Method" and "Audit & Flags" sheets of
-// "finance record.xlsx", which is the source of truth for how the company
-// figures were collected and what may and may not be compared across them.
+// "AIF_nasdaq10_clean_2026-09-18.xlsx", which is the source of truth for how
+// the company figures were collected and what may and may not be compared
+// across them.
 export const METHODOLOGY: Methodology = {
   datasetTitle:
-    "Nasdaq-listed — 14 metrics × 10 companies — Jul/Aug 2026 earnings cohort",
-  cohort: "Jul/Aug 2026 earnings cohort",
-  dataCutoff: "2026-08-23",
+    "NASDAQ-100 — 14 metrics × 10 companies — re-snapshot: 2026-09-18 close; fundamentals to latest reported quarter",
+  cohort: "2026-09-18 re-snapshot",
+  // The workbook's price date. Fundamentals are as of each company's latest
+  // reported quarter — see the "Snapshot date" and "Mixed dates" entries.
+  dataCutoff: "2026-09-18",
 
   entries: [
     {
       label: "Primary source",
-      body: "stockanalysis.com (fundamentals from S&P Global Market Intelligence), matching the original workbook.",
+      body: "stockanalysis.com. Fundamentals from S&P Global Market Intelligence; growth/statements from Fiscal.ai.",
     },
     {
       label: "Verification",
-      body: "Every value cross-checked across Yahoo Finance, GuruFocus, TipRanks, SimplyWallSt and company 8-K/press releases (Aug 2026 snapshots). Divergences flagged in Audit & Flags.",
-    },
-    {
-      label: "Company selection",
-      body: "Nasdaq-listed companies reporting in the Jul–Aug 2026 earnings window. NVDA and TSLA retained by request. MU included as a deliberate exception (fiscal year ends Aug → reports late Sep).",
+      body: "Two-vendor rule. Every value cross-checked against a second source (Yahoo Finance / CNBC / Morningstar / GuruFocus) on 2026-09-21. Prices agreed to the cent across all ten. Differences remain only in: EV/EBITDA (EBITDA definition), FCF (levered vs OCF−CapEx), COST D/E (lease treatment), TSLA P/E (share-count convention).",
     },
     {
       label: "Growth basis",
-      body: "Revenue growth and EPS growth = TTM YoY (or latest reported quarter YoY where noted).",
+      body: "Revenue growth and EPS growth = TTM YoY (trailing 12 months vs prior 12 months).",
     },
     {
       label: "Earnings Surprise basis",
-      body: "Latest reported quarter: (Actual EPS − consensus EPS)/|consensus|, non-GAAP/adjusted where the company guides non-GAAP. Left blank with scheduled date for quarters not yet reported as of 2026-08-23.",
+      body: "Latest reported quarter: (Actual EPS − consensus EPS)/|consensus|. Non-GAAP where the company guides non-GAAP (NVDA/MSFT/AMGN/TSLA/ADBE); GAAP for AAPL/AMZN/GOOGL (one-offs included, flagged); COST GAAP, in-line.",
     },
     {
-      label: "Unreported quarters",
-      body: "NVDA (8/26), CRWD (8/26), SNPS (8/26), MRVL (8/27), ADSK (8/27), WDAY (~8/26), INTU (8/25) had not reported as of 2026-08-23 → Earnings Surprise blank. ADI (8/19), TSLA (7/22) and MU Q3 (6/24) reported → actual surprise recorded.",
+      label: "Snapshot date",
+      body: "Prices: 2026-09-18 close (last US session before 2026-09-21). Fundamentals: each company's latest reported quarter. All ten have reported at least once; no cell is left blank this round. COST reports 2026-09-24, which will make this snapshot stale again within days.",
+    },
+    {
+      label: "Mixed dates",
+      body: "Prices are 2026-09-18; fundamentals are as of each company's latest reported quarter (Jul 2026 for NVDA, Aug 2026 for ADBE, Jun 2026 for the other eight). That is the standard convention for a TTM table, but it must be stated, or P/E reads as internally inconsistent.",
     },
     {
       label: "Earnings yield",
-      body: "1/PE, entered as a live formula so it self-checks. Marked n/m where PE is negative or meaningless.",
+      body: "1/PE, entered as a live formula so it self-checks.",
     },
     {
-      label: "Distortion handling",
-      body: "P/E, EV/EBITDA, ROE, net margin flagged where distorted by: GAAP losses (CRWD), one-off tax benefits (MRVL), acquisition integration (SNPS/Ansys, ADSK/MaintainX, ADI/Empower), restructuring charges (INTU), collapsed earnings (TSLA), or cyclical peaks (MU).",
-    },
-    {
-      label: "Prices",
-      body: "Approximate closing prices ~2026-08-21; used only for context, not for the ratios (ratios come from the sources above).",
+      label: "Known weak row",
+      body: "EV/EBITDA is derived, not read: it was re-based by moving market cap with the verified price change and holding EBITDA constant except for NVDA and ADBE. Directionally right, second decimal is noise.",
     },
     {
       label: "Audit",
-      body: "Two checks. (A) Transcription: every value re-checked against its source. (B) External validity: cross-checked across stockanalysis.com (S&P Global Market Intelligence), Yahoo Finance, GuruFocus, TipRanks and company filings, Aug 2026 snapshots. Where sources diverge (e.g. P/E, EV/EBITDA on low/negative-earnings names), the stockanalysis value is used and the divergence is flagged.",
+      body: "Three checks. (A) Transcription: every value re-checked cell-by-cell against its source page. (B) External validity: cross-checked against a second vendor (Yahoo / CNBC / Morningstar). (C) Staleness: every cell re-checked on 2026-09-21 against live sources.",
     },
   ],
 
@@ -65,7 +64,7 @@ export const METHODOLOGY: Methodology = {
   ],
 
   crossSectionalCaveat:
-    "This cohort spans clean high-margin names (NVDA, ADSK, ADI), GAAP-unprofitable SaaS (CRWD), one-off-distorted earnings (MRVL tax benefit; SNPS Ansys integration), a cyclical peak (MU memory upcycle), and a collapsed-margin case (TSLA). For surprise-vs-abnormal-return work, use non-GAAP/adjusted EPS for the surprise and treat P/E, EV/EBITDA and ROE on the flagged names as non-comparable. n = 10 observed tendencies with causal hypotheses, not statistical conclusions.",
+    "Several mega-caps booked Anthropic/SpaceX mark-to-market gains in 2026 Q2, producing one-off Earnings Surprises and inflated EPS growth / net margin / ROE. For surprise-vs-abnormal-return work, compute an operating (adjusted-EPS) surprise separately. Table values are as-reported; distorted names are flagged in each company's data-quality note.",
 };
 
 export const EXCLUDED_METRIC_REASON =
@@ -76,7 +75,7 @@ export const EXCLUDED_METRIC_REASON =
 export const NOT_COLLECTED_REASON =
   "Not recorded in the source workbook, which collects ratios and margins rather than absolute income-statement or cash-flow figures.";
 
-// "23 August 2026" — derived from the workbook cutoff above, never retyped.
+// "18 September 2026" — derived from the workbook date above, never retyped.
 export const DATA_AS_OF = formatSnapshotDate(METHODOLOGY.dataCutoff);
 
 // One sentence, used wherever the site needs to say what the data is.

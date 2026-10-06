@@ -9,11 +9,11 @@ export default function Navigation() {
 
   return (
     <nav className="border-b border-gray-200 bg-white">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-2 px-6 py-4">
         <Link href="/" className="text-lg font-semibold text-gray-900">
           FinLearn
         </Link>
-        <ul className="flex gap-8">
+        <ul className="flex flex-wrap gap-x-5 gap-y-1 sm:gap-x-8">
           {NAV_LINKS.map((link) => {
             const isActive =
               link.href === "/"

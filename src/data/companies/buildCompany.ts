@@ -20,7 +20,8 @@ import {
 
 // Shared provenance for every figure read off the workbook's Metrics sheet.
 export const SOURCE = "stockanalysis.com (S&P Global Market Intelligence)";
-export const AS_OF = "Aug 2026 snapshot — data cutoff 2026-08-23";
+export const AS_OF =
+  "Sep 2026 re-snapshot — prices 2026-09-18 close, fundamentals to latest reported quarter";
 
 // What a company file supplies for ONE of the 14 collected indicators.
 // Everything else about the metric comes from the central registry, so no

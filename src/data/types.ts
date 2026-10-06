@@ -257,3 +257,49 @@ export interface Methodology {
   // The workbook's closing caution on reading the cohort as a whole.
   crossSectionalCaveat: string;
 }
+
+// ─── Questions (self-test) ─────────────────────────────────────────────────
+
+interface QuizQuestionBase {
+  id: string;
+  // Short topic label shown above the question, e.g. "Earnings Surprise".
+  topic: string;
+  prompt: string;
+}
+
+// What a numerical answer is measured in. It decides which equivalent ways of
+// writing the same number are accepted (see lib/quiz).
+export type NumericUnit = "percent" | "multiple" | "usd-millions";
+
+export interface NumericQuestion extends QuizQuestionBase {
+  kind: "numeric";
+  // In the unit's own terms: 20 for 20%, 350 for $350 million.
+  answer: number;
+  unit: NumericUnit;
+  // The answer as shown after submission, e.g. "20%".
+  answerLabel: string;
+  calculation: string;
+  explanation: string;
+}
+
+export interface ChoiceQuestion extends QuizQuestionBase {
+  kind: "choice";
+  options: { id: string; text: string }[];
+  correctOptionId: string;
+  calculation: string[] | null;
+  explanation: string;
+}
+
+// A conceptual question with no single correct wording. It is never marked
+// automatically: the learner compares their answer with the model answer and
+// records their own assessment.
+export interface SelfAssessedQuestion extends QuizQuestionBase {
+  kind: "self-assessed";
+  modelAnswer: string;
+  keyIdeas: string[];
+}
+
+export type QuizQuestion =
+  | NumericQuestion
+  | ChoiceQuestion
+  | SelfAssessedQuestion;

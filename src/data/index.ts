@@ -1,28 +1,28 @@
 import type { Company, Metric, MetricGroup } from "@/data/types";
 import nvidia from "@/data/companies/nvidia";
+import microsoft from "@/data/companies/microsoft";
+import apple from "@/data/companies/apple";
+import amazon from "@/data/companies/amazon";
+import alphabet from "@/data/companies/alphabet";
+import costco from "@/data/companies/costco";
+import pepsico from "@/data/companies/pepsico";
+import amgen from "@/data/companies/amgen";
 import tesla from "@/data/companies/tesla";
-import crowdstrike from "@/data/companies/crowdstrike";
-import marvell from "@/data/companies/marvell";
-import autodesk from "@/data/companies/autodesk";
-import workday from "@/data/companies/workday";
-import synopsys from "@/data/companies/synopsys";
-import analogDevices from "@/data/companies/analog-devices";
-import intuit from "@/data/companies/intuit";
-import micron from "@/data/companies/micron";
+import adobe from "@/data/companies/adobe";
 
 // Keyed by ticker — the Compare page and company index both rely on this map.
 // Adding a new company is: import + add one entry here.
 export const COMPANIES: Record<string, Company> = {
   NVDA: nvidia,
+  MSFT: microsoft,
+  AAPL: apple,
+  AMZN: amazon,
+  GOOGL: alphabet,
+  COST: costco,
+  PEP: pepsico,
+  AMGN: amgen,
   TSLA: tesla,
-  CRWD: crowdstrike,
-  MRVL: marvell,
-  ADSK: autodesk,
-  WDAY: workday,
-  SNPS: synopsys,
-  ADI: analogDevices,
-  INTU: intuit,
-  MU: micron,
+  ADBE: adobe,
 };
 
 export function getCompany(ticker: string): Company | null {

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getAllCompanies } from "@/data";
+import FourStepAnalysis from "@/components/company/FourStepAnalysis";
 
 export default function CompaniesPage() {
   const companies = getAllCompanies();
@@ -43,6 +44,8 @@ export default function CompaniesPage() {
           <p className="text-gray-400 text-sm">No companies added yet.</p>
         )}
       </section>
+
+      <FourStepAnalysis />
     </div>
   );
 }

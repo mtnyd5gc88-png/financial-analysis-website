@@ -1,4 +1,4 @@
-"""Verify every company record in the app against reference/finance record.xlsx.
+"""Verify every company record in the app against reference/AIF_nasdaq10_clean_2026-09-18.xlsx.
 
 The workbook is the source of truth for company financial values. This script
 re-reads it directly and compares, cell by cell, against what the site will
@@ -11,7 +11,7 @@ import json, re, sys, zipfile, datetime
 import xml.etree.ElementTree as ET
 
 NS = '{http://schemas.openxmlformats.org/spreadsheetml/2006/main}'
-WORKBOOK = "reference/finance record.xlsx"
+WORKBOOK = "reference/AIF_nasdaq10_clean_2026-09-18.xlsx"
 
 # metric id in the app  ->  Indicator label in the workbook's Metrics sheet
 METRIC_TO_INDICATOR = {
@@ -147,7 +147,7 @@ def main():
             problems.append(f"[{ticker}] sector {company['sector']!r} != workbook {want_sector!r}")
 
         checks += 1
-        want_price = by_indicator["Price (approx, ~2026-08-21, $)"][ticker]
+        want_price = by_indicator["Price (2026-09-18 close, $)"][ticker]
         if company["meta"]["price"] != want_price:
             problems.append(f"[{ticker}] price {company['meta']['price']!r} != workbook {want_price!r}")
 
